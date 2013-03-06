@@ -8,7 +8,7 @@ app.controller('PolicyListCtrl', function($scope, $http ,$filter) {
 		$scope.policies = data;
 		$scope.groupItems();
 	});
-	$scope.reverse=true;
+	$scope.reverse=false;
 	$scope.predicate='';
 	$scope.listLimit= 5;
 	$scope.pages = 0;
@@ -74,8 +74,10 @@ app.controller('PolicyListCtrl', function($scope, $http ,$filter) {
 		for (var i=0, l=$scope.pages; i<l; i++) {
 			tempArr.push.apply(tempArr, $scope.groupedItems[i]);
 		}
+		// negate reverse if it's a same predicate, otherwise set to false
+		$scope.reverse = $scope.predicate == predicate ? !$scope.reverse : false;
+
 		$scope.predicate = predicate;
-		$scope.reverse = !$scope.reverse;
 		$scope.groupItems( $filter('orderBy')(tempArr, $scope.predicate, $scope.reverse) );
 	}
 	
