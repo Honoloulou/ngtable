@@ -7,7 +7,6 @@ app.controller('PolicyListCtrl', function($scope, $http ,$filter) {
 	var request = $http.get('policies/policies.json').success(function(data){
 		$scope.policies = data;
 		$scope.groupItems();
-		console.log('get json success');
 	});
 
 	$scope.predicate='';
@@ -43,13 +42,11 @@ app.controller('PolicyListCtrl', function($scope, $http ,$filter) {
 		};
 		$scope.pages = Math.ceil(policies.length / $scope.listLimit);
 
-		console.log('groupItems executed length: ' + policies.length )
 		var groupIndex = 0;
 
 		for (var i=0, l=policies.length; i<l; i++) {
 			if (groupIndex < Math.floor(i/$scope.listLimit)) {
 				groupIndex++;
-				console.log('groupIndex ' + groupIndex)
 				$scope.groupedItems[''+groupIndex] = [];
 			}
 
@@ -57,9 +54,32 @@ app.controller('PolicyListCtrl', function($scope, $http ,$filter) {
 		}
 	}
 
-	
-	//
+	// search policy
+	$scope.searchPolicy = function() {
+		// reset the currentPage to 0
+		$scope.currentPage = 0;
+		// search the policies based on the query, again re-group the items again
+		var filteredItems =  $filter('filter')( $scope.policies,$scope.query);
 
+		$scope.predicate ='';
+		$scope.reverse = false;
+		$scope.groupItems( filteredItems )
+		
+
+	}
+
+	$scope.sortBy = function(predicate){
+		var tempArr = [];
+		// join arrays
+		for (var i=0, l=$scope.pages; i<l; i++) {
+			tempArr.push.apply(tempArr, $scope.groupedItems[i]);
+		}
+		$scope.predicate = predicate;
+		$scope.reverse = !$scope.reverse;
+		$scope.groupItems( $filter('orderBy')(tempArr, $scope.predicate, $scope.reverse) );
+	}
+	
+	
 	
 }) // PolicyListCtrl
 

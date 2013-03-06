@@ -17,7 +17,6 @@ angular.module('policy.directives',[]).
 			templateUrl: "partials/pagination.html",
 			link: function(scope, element, attrs) {
 				scope.pages = Math.ceil(scope.policies.length / scope.listLimit);
-				console.log('directive pagination ' + scope.pages);
 			}
 		}
 	})

@@ -1,6 +1,6 @@
-Search everything: <input ng-model="query.$">
+Search everything: <input ng-model="query.$" ng-change="searchPolicy()" >
 <br>
-Search Agent Name: <input ng-model="query.writingAgentName">
+Search Agent Name: <input ng-model="query.writingAgentName" ng-change="searchPolicy()">
 <br>
 
 <table>
@@ -22,14 +22,18 @@ Search Agent Name: <input ng-model="query.writingAgentName">
 
 	<thead>
 		<tr>
-			<th><a href="" ng-click="predicate='id'; reverse=!reverse">#</a></th>
-			<th><a href="" ng-click="predicate='writingAgentName'; reverse=!reverse">Writing Agent Name</a></th>
+			<th><a href="" 
+						ng-click="sortBy('id')"
+						ng-class="{active: predicate =='id', desc: predicate =='id' && reverse ==false}">#</a></th>
+			<th><a href 
+						ng-click="sortBy('writingAgentName')"
+						ng-class="{active: predicate =='writingAgentName', desc: predicate =='writingAgentName' && reverse ==false}">Writing Agent Name</a></th>
 			<th>Writing Agent Number</th>
 			<th>Received Date</th>
 			<th>Policy Effective Date</th>
 			<th>Insured/ Annuitant Name</th>
 			<th>Policy Number</th>
-			<th>Product<br>▼</th>
+			<th>Product</th>
 			<th>Qualified Plan Type</th>
 			<th>Policy Status</th>
 			<th>Accumulation/ Annuitization Value</th>
@@ -45,9 +49,9 @@ Search Agent Name: <input ng-model="query.writingAgentName">
 		</tr>
 	</tfoot>
 
-	<tbody list-limit="5">
+	<tbody list-limit="10">
 
-	<tr ng-repeat="policy in groupedItems[currentPage] | limitTo: listLimit | filter: query | orderBy:predicate:reverse" ng-class-odd="'odd'" ng-class-even="'even'">
+	<tr ng-repeat="policy in groupedItems[currentPage]" ng-class-odd="'odd'" ng-class-even="'even'">
 		<td>{{policy.id}}</td>
 		<td>{{policy.writingAgentName}}</td>
 		<td>{{policy.writingAgentNumber}}</td>
