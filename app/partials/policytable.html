@@ -1,10 +1,12 @@
+<h2>AngularJS Table Prototype</h2>
+<p>Using AngularJS to build table from a json object.
+<p>
 Search everything: <input ng-model="query.$" ng-change="searchPolicy()" >
-<br>
+</p>
+<p>
 Search Agent Name: <input ng-model="query.writingAgentName" ng-change="searchPolicy()">
-<br>
-
+</p>
 <table>
-
 <colgroup>
 		<col>
 		<col>
@@ -49,7 +51,7 @@ Search Agent Name: <input ng-model="query.writingAgentName" ng-change="searchPol
 		</tr>
 	</tfoot>
 
-	<tbody list-limit="10">
+	<tbody list-limit="5">
 
 	<tr ng-repeat="policy in groupedItems[currentPage]" ng-class-odd="'odd'" ng-class-even="'even'">
 		<td>{{policy.id}}</td>

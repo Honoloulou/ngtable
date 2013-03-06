@@ -1,17 +1,13 @@
-<div class="pagination">
-    current page: {{currentPage + 1 }}  of  {{pages}} <br/>
-   
-    <ul>
-        <li ng-class="{disabled: currentPage == 0}">
-            <a href ng-click="prevPage()">« Prev</a>
-        </li>
-        <li ng-repeat="page in [] | range: pages"
-            ng-class="{active: page == currentPage}"
-            >
-            <a href ng-click="setPage(page)">{{page + 1}}</a>
-        </li>
-        <li ng-class="{disabled: currentPage == pages - 1}">
-            <a href ng-click="nextPage()">Next »</a>
-        </li>
-    </ul>
-</div>
+<ul class="pagination">
+    <li ng-class="{unavailable: currentPage == 0}">
+        <a href ng-click="prevPage()">&laquo;</a>
+    </li>
+    <li ng-repeat="page in [] | range: pages"
+        ng-class="{current: page == currentPage}"
+        >
+        <a href ng-click="setPage(page)">{{page + 1}}</a>
+    </li>
+    <li ng-class="{unavailable: currentPage == pages - 1}">
+        <a href ng-click="nextPage()">&raquo;</a>
+    </li>
+</ul>

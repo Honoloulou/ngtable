@@ -1,5 +1,5 @@
 /* app css stylesheet */
-
+/*
 .disabled a {
   color:gray;
 }
@@ -16,16 +16,20 @@ a.active {
 	color:red;
 	text-decoration: none;
 }
-a.active:after {
-	content: "\25B2";
-}
+
 a.desc {
 	color:green;
 }
-a.desc:after {
-	content: "\25BC";
-}
+
 
 .odd {
 	background:#eee;
+}
+*/
+
+a.active:after {
+	content: "\25B2";
+}
+a.desc:after {
+	content: "\25BC";
 }
