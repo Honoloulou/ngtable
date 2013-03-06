@@ -1,28 +1,44 @@
-# angular-seed — the seed for AngularJS apps
+## Style the table
 
-This project is an application skeleton for a typical [AngularJS](http://angularjs.org/) web app.
-You can use it to quickly bootstrap your angular webapp projects and dev environment for these
-projects.
+### Limit the display of items per page 
 
-The seed contains AngularJS libraries, test libraries and a bunch of scripts all preconfigured for
-instant web development gratification. Just clone the repo (or download the zip/tarball), start up
-our (or yours) webserver and you are ready to develop and test your application.
+add attribute **list-limit="n"** (replace n with a number) to *tbody*. For HTML5 compliance, 
+attribute can be replaced with *data-* prefix, ie: **data-list-limit="9"**. 
+[See example](https://github.com/lancevo/ngtable/blob/master/app/partials/policytable.html#L54)
 
-The seed app doesn't do much, just shows how to wire two controllers and views together. You can
-check it out by opening app/index.html in your browser (might not work file `file://` scheme in
-certain browsers, see note below).
+### Render the rows
+  
+```html
+  <tr ng-repeat="policy in groupedItems[currentPage]" ng-class-odd="'odd'" ng-class-even="'even'">
+```
 
-_Note: While angular is client-side-only technology and it's possible to create angular webapps that
-don't require a backend server at all, we recommend hosting the project files using a local
-webserver during development to avoid issues with security restrictions (sandbox) in browsers. The
-sandbox implementation varies between browsers, but quite often prevents things like cookies, xhr,
-etc to function properly when an html page is opened via `file://` scheme instead of `http://`._
+It iterates each of the item in groupedItems, and return item to object **policy**. If it's an **odd** row *(ng-class-odd)*, 
+add class **odd** to the element (&lt;tr&gt;). Same for even row.
 
+### Sort headers
+```html
+<th><a href="" 
+      ng-click="sortBy('id')"
+      ng-class="{active: predicate =='id', desc: predicate =='id' && reverse }">
+      id</a>
+</th>
+<th><a href 
+      ng-click="sortBy('writingAgentName')"
+      ng-class="{active: predicate =='writingAgentName', desc: predicate =='writingAgentName' && reverse }">
+      Writing Agent Name</a>
+</th>
+```
+*ng-click="sortBy('id')"*  
+Each time the column header is clicked *(ng-click)*, it calls the **sortBy()** method with the name of the column 
+it wants to sort *(predicate)*. It sorts the column with the current data context whatever is currently displaying. 
+If it's displaying a subset of data with agent's first name is John, then any sorting with by sorted within that data subset.
 
-## How to use angular-seed
+*ng-class="{active: predicate =='id', desc: predicate =='id' && reverse ==false}"*  
+It's a conditional statement to add classes *"active"* and *"desc"* to the element. If it's sorted by column *writingAgentName*,
+*predicate* is *writingAgentName*, which it will add class *"active"* to the anchor tag. Same is for class *"desc"*, 
+when *reverse* is true, it'll add class *"desc"* to the anchor tag.
 
-Clone the angular-seed repository and start hacking...
-
+_____________
 
 ### Running the app during development
 
@@ -146,6 +162,4 @@ fetch the changes and merge them into your project with git.
         filtersSpec.js          --> specs for filters
         servicesSpec.js         --> specs for services
 
-## Contact
 
-For more information on AngularJS please check out http://angularjs.org/
