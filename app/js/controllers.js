@@ -8,7 +8,7 @@ app.controller('PolicyListCtrl', function($scope, $http ,$filter) {
 		$scope.policies = data;
 		$scope.groupItems();
 	});
-
+	$scope.reverse=true;
 	$scope.predicate='';
 	$scope.listLimit= 5;
 	$scope.pages = 0;

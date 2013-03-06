@@ -1,5 +1,5 @@
 <h2>AngularJS Table Prototype</h2>
-<p>Using AngularJS to build table from a json object.
+<p>Using AngularJS to build table from a json object. <a href="https://github.com/lancevo/ngtable">Source code</a>
 <p>
 Search everything: <input ng-model="query.$" ng-change="searchPolicy()" >
 </p>
@@ -26,11 +26,13 @@ Search Agent Name: <input ng-model="query.writingAgentName" ng-change="searchPol
 		<tr>
 			<th><a href="" 
 						ng-click="sortBy('id')"
-						ng-class="{active: predicate =='id', desc: predicate =='id' && reverse ==false}">#</a></th>
+						ng-class="{active: predicate =='id', desc: predicate =='id' && reverse }">#</a></th>
 			<th><a href 
 						ng-click="sortBy('writingAgentName')"
-						ng-class="{active: predicate =='writingAgentName', desc: predicate =='writingAgentName' && reverse ==false}">Writing Agent Name</a></th>
-			<th>Writing Agent Number</th>
+						ng-class="{active: predicate =='writingAgentName', desc: predicate =='writingAgentName' && reverse}">Writing Agent Name</a></th>
+			<th><a href 
+						ng-click="sortBy('writingAgentNumber')"
+						ng-class="{active: predicate =='writingAgentNumber', desc: predicate =='writingAgentNumber' && reverse }">Writing Agent Number</a></th>
 			<th>Received Date</th>
 			<th>Policy Effective Date</th>
 			<th>Insured/ Annuitant Name</th>
