@@ -1,0 +1,67 @@
+Search everything: <input ng-model="query.$">
+<br>
+Search Agent Name: <input ng-model="query.writingAgentName">
+<br>
+
+<table>
+
+<colgroup>
+		<col>
+		<col>
+		<col>
+		<col>
+		<col>
+		<col>
+		<col>
+		<col>
+		<col>
+		<col>
+		<col>
+		<col>
+</colgroup>
+
+	<thead>
+		<tr>
+			<th><a href="" ng-click="predicate='id'; reverse=!reverse">#</a></th>
+			<th><a href="" ng-click="predicate='writingAgentName'; reverse=!reverse">Writing Agent Name</a></th>
+			<th>Writing Agent Number</th>
+			<th>Received Date</th>
+			<th>Policy Effective Date</th>
+			<th>Insured/ Annuitant Name</th>
+			<th>Policy Number</th>
+			<th>Product<br>▼</th>
+			<th>Qualified Plan Type</th>
+			<th>Policy Status</th>
+			<th>Accumulation/ Annuitization Value</th>
+			<th>Owner Name</th>
+		</tr>
+	</thead>
+
+	<tfoot>
+		<tr>
+			<td colspan="12">
+				 <div pagination></div>
+			</td>
+		</tr>
+	</tfoot>
+
+	<tbody list-limit="5">
+
+	<tr ng-repeat="policy in groupedItems[currentPage] | limitTo: listLimit | filter: query | orderBy:predicate:reverse" ng-class-odd="'odd'" ng-class-even="'even'">
+		<td>{{policy.id}}</td>
+		<td>{{policy.writingAgentName}}</td>
+		<td>{{policy.writingAgentNumber}}</td>
+		<td>{{policy.receivedDate}}</td>
+		<td>{{policy.policyEffectiveDate}}</td>
+		<td>{{policy.insuredAnnuitantName}}</td>
+		<td>{{policy.policyNumber}}</td>
+		<td>{{policy.product}}</td>
+		<td>{{policy.qualifiedPlanType}}</td>
+		<td>{{policy.policyStatus}}</td>
+		<td>{{policy.accumulationAnnuitizationValue | formatCurrency}}</td>
+		<td>{{policy.ownerName}}</td>
+	</tr>
+
+
+	</tbody>
+</table>
