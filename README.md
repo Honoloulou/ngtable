@@ -19,13 +19,11 @@ add class **odd** to the element (&lt;tr&gt;). Same for even row.
 ```html
 <th><a href="" 
       ng-click="sortBy('id')"
-      ng-class="{active: predicate =='id', desc: predicate =='id' && reverse }">
-      id</a>
+      ng-class="selectedColumn('id')">id</a>
 </th>
 <th><a href 
       ng-click="sortBy('writingAgentName')"
-      ng-class="{active: predicate =='writingAgentName', desc: predicate =='writingAgentName' && reverse }">
-      Writing Agent Name</a>
+      ng-class="selectedColumn('writingAgentName')">Writing Agent Name</a>
 </th>
 ```
 *ng-click="sortBy('id')"*  
@@ -33,10 +31,9 @@ Each time the column header is clicked *(ng-click)*, it calls the **sortBy()** m
 it wants to sort *(predicate)*. It sorts the column with the current data context whatever is currently displaying. 
 If it's displaying a subset of data with agent's first name is John, then any sorting with by sorted within that data subset.
 
-*ng-class="{active: predicate =='id', desc: predicate =='id' && reverse ==false}"*  
-It's a conditional statement to add classes *"active"* and *"desc"* to the element. If it's sorted by column *writingAgentName*,
-*predicate* is *writingAgentName*, which it will add class *"active"* to the anchor tag. Same is for class *"desc"*, 
-when *reverse* is true, it'll add class *"desc"* to the anchor tag.
+*ng-class="selectedColumn('id')"*  
+When column *id* is being sorted, this method *selectedColumn* will return a string *'asc'* or *'dsc'* 
+when it's an ascending sort or descending sort.
 
 _____________
 
