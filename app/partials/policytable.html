@@ -26,26 +26,40 @@ Search Agent Name: <input ng-model="query.writingAgentName" ng-change="searchPol
 		<tr>
 			<th><a href="" 
 						ng-click="sortBy('id')"
-						ng-class="{active: predicate =='id', desc: predicate =='id' && reverse }">#</a></th>
+						ng-class="selectedColumn('id')">#</a></th>
 			<th><a href 
 						ng-click="sortBy('writingAgentName')"
-						ng-class="{active: predicate =='writingAgentName', desc: predicate =='writingAgentName' && reverse}">Writing Agent Name</a></th>
+						ng-class="selectedColumn('writingAgentName')">Writing Agent Name</a></th>
 			<th><a href 
 						ng-click="sortBy('writingAgentNumber')"
-						ng-class="{active: predicate =='writingAgentNumber', desc: predicate =='writingAgentNumber' && reverse }">Writing Agent Number</a></th>
+						ng-class="selectedColumn('writingAgentNumber')">Writing Agent Number</a></th>
 			<th><a href 
 						ng-click="sortBy('receivedDate')"
-						ng-class="{active: predicate =='receivedDate', desc: predicate =='receivedDate' && reverse }">Received Date</a></th>
+						ng-class="selectedColumn('receivedDate')">Received Date</a></th>
 			<th><a href 
 						ng-click="sortBy('policyEffectiveDate')"
-						ng-class="{active: predicate =='policyEffectiveDate', desc: predicate =='policyEffectiveDate' && reverse }">Policy Effective Date</a></th>
-			<th>Insured/ Annuitant Name</th>
-			<th>Policy Number</th>
-			<th>Product</th>
-			<th>Qualified Plan Type</th>
-			<th>Policy Status</th>
-			<th>Accumulation/ Annuitization Value</th>
-			<th>Owner Name</th>
+						ng-class="selectedColumn('policyEffectiveDate')">Policy Effective Date</a></th>
+			<th><a href="" 
+						ng-click="sortBy('insuredAnnuitantName')"
+						ng-class="selectedColumn('insuredAnnuitantName')">Insured/ Annuitant Name</a></th>
+			<th><a href="" 
+						ng-click="sortBy('policyNumber')"
+						ng-class="selectedColumn('policyNumber')">Policy Number</a></th>
+			<th><a href="" 
+						ng-click="sortBy('product')"
+						ng-class="selectedColumn('product')">Product</a></th>
+			<th><a href="" 
+						ng-click="sortBy('qualifiedPlanType')"
+						ng-class="selectedColumn('qualifiedPlanType')">Qualified Plan Type</a></th>
+			<th><a href="" 
+						ng-click="sortBy('policyStatus')"
+						ng-class="selectedColumn('policyStatus')">Policy Status</a></th>
+			<th><a href 
+						ng-click="sortBy('accumulationAnnuitizationValue')"
+						ng-class="selectedColumn('accumulationAnnuitizationValue')">Accumulation/ Annuitization Value</a></th>
+			<th><a href="" 
+						ng-click="sortBy('ownerName')"
+						ng-class="selectedColumn('ownerName')">Owner Name</a></th>
 		</tr>
 	</thead>
 
@@ -57,7 +71,7 @@ Search Agent Name: <input ng-model="query.writingAgentName" ng-change="searchPol
 		</tr>
 	</tfoot>
 
-	<tbody list-limit="5">
+	<tbody list-limit="10">
 
 	<tr ng-repeat="policy in groupedItems[currentPage]" ng-class-odd="'odd'" ng-class-even="'even'">
 		<td>{{policy.id}}</td>
@@ -70,7 +84,7 @@ Search Agent Name: <input ng-model="query.writingAgentName" ng-change="searchPol
 		<td>{{policy.product}}</td>
 		<td>{{policy.qualifiedPlanType}}</td>
 		<td>{{policy.policyStatus}}</td>
-		<td>{{policy.accumulationAnnuitizationValue | formatCurrency}}</td>
+		<td>{{policy.accumulationAnnuitizationValue | currency:"$"}}</td>
 		<td>{{policy.ownerName}}</td>
 	</tr>
 

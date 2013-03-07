@@ -659,7 +659,7 @@ d.forEach(function(el, index){
 	d[index]['id'] = index+1;
 	d[index]['writingAgentNumber'] = getRandomInt(1000000,9000000);
 	d[index]['policyNumber'] = getRandomInt(1000000,9000000);
-	d[index]['accumulationAnnuitizationValue'] = getRandomInt(100000,9000000) + '.' + getRandomInt(10,99);
+	d[index]['accumulationAnnuitizationValue'] = parseFloat(getRandomInt(100000,9000000) + '.' + getRandomInt(0,99));
 	d[index]['receivedDate'] = dts[0];
 	d[index]['policyEffectiveDate'] = dts[1];
 	
