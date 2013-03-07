@@ -14,9 +14,16 @@ angular.module('policy.directives',[]).
 	}).
 	directive("pagination", function(){
 		return {
-			templateUrl: "partials/pagination.html",
+			templateUrl: "partials/pagination.html"
+		}
+	}).
+	// directive to convert string to date obj for easier
+	directive("convertDate", function(){
+		return {
 			link: function(scope, element, attrs) {
-				scope.pages = Math.ceil(scope.policies.length / scope.listLimit);
+				
+				scope.convertDate(attrs.convertDate);
+				
 			}
 		}
 	})

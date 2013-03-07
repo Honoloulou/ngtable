@@ -65,12 +65,11 @@ app.controller('PolicyListCtrl', function($scope, $http ,$filter) {
 		$scope.reverse = false;
 		$scope.groupItems( filteredItems )
 		
-
 	}
 
 	$scope.sortBy = function(predicate){
 		var tempArr = [];
-		// join arrays
+		// join arrays without returning an array
 		for (var i=0, l=$scope.pages; i<l; i++) {
 			tempArr.push.apply(tempArr, $scope.groupedItems[i]);
 		}
@@ -79,6 +78,22 @@ app.controller('PolicyListCtrl', function($scope, $http ,$filter) {
 
 		$scope.predicate = predicate;
 		$scope.groupItems( $filter('orderBy')(tempArr, $scope.predicate, $scope.reverse) );
+	}
+
+	$scope.convertDate = function(predicates) {
+		predicates = predicates.split(',');
+
+		var m = 0,
+				n = predicates.length;
+		console.log(predicates);
+		for (var i=0, j=$scope.policies.length; i<j; i++) {
+			for (m=0; m<n; m++) {
+				$scope.policies[i][predicates[m]] = new Date( $scope.policies[i][predicates[m]] )
+				console.log(i + ' ' + $scope.policies[i][predicates[m]])
+			}
+		}
+
+		$scope.groupItems();
 	}
 	
 	
