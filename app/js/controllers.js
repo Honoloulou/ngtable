@@ -7,7 +7,6 @@ app.controller('PolicyListCtrl', function($scope, $http ,$filter) {
 	var request = $http.get('policies/policies.json').success(function(data){
 		$scope.policies = data;
 		// convert properties to Date objects
-		$scope.convertDate("receivedDate,policyEffectiveDate");
 		$scope.groupItems();
 	});
 	$scope.reverse=false;
@@ -16,6 +15,16 @@ app.controller('PolicyListCtrl', function($scope, $http ,$filter) {
 	$scope.pages = 0;
 	$scope.currentPage = 0;
 	$scope.groupedItems = {};
+
+	// predefined properties that are dates
+	$scope.dateProps = {
+		'receivedDate' : 1,
+		'policyEffectiveDate' : 1
+	}
+
+	$scope.currencyProps = {
+		'accumulationAnnuitizationValue' : 1
+	}
 
 
 	$scope.setPage = function(page) {
@@ -66,34 +75,41 @@ app.controller('PolicyListCtrl', function($scope, $http ,$filter) {
 		$scope.predicate ='';
 		$scope.reverse = false;
 		$scope.groupItems( filteredItems )
-		
 	}
 
-	$scope.sortBy = function(predicate){
-		var tempArr = [];
-		// join arrays without returning an array
-		
+	// a sort helper to convert predicate to the correct type
+  function predicateConverter(item){
+		// if it's a date , convert it to a Date object
+		if ($scope.dateProps.hasOwnProperty($scope.predicate)) {
+			return new Date( item[$scope.predicate] )
+		} 
+
+		// it's a currency, strip the $ and comma, convert it to float
+		if ($scope.currencyProps.hasOwnProperty($scope.predicate)) {
+			return parseFloat( item[$scope.predicate].replace(/[\$,]/g,'') )
+		}
+
+		return item[$scope.predicate];
+	}
+
+	$scope.sortBy = function(predicate){	
 		// negate reverse if it's a same predicate, otherwise set to false
 		$scope.reverse = $scope.predicate == predicate ? !$scope.reverse : false;
 		$scope.predicate = predicate;
-		$scope.groupItems( $filter('orderBy')($scope.policies, $scope.predicate, $scope.reverse) );
+		// convert the date prop string to Date object on the fly, so it can compare 2 dates correctly
+		// leave original string intact so it's searchable
+		$scope.groupItems( 
+			$filter('orderBy')( $scope.policies, predicateConverter, $scope.reverse ) 
+		);		
 	}
 
-	$scope.convertDate = function(predicates) {
-		predicates = predicates.split(',');
 
-		var m = 0,
-				n = predicates.length;
-		for (var i=0, j=$scope.policies.length; i<j; i++) {
-			for (m=0; m<n; m++) {
-				$scope.policies[i][predicates[m]] = new Date( $scope.policies[i][predicates[m]] )
-			}
+	// a helper to add class "dsc" or "asc" to the header column when it's being sorted
+	$scope.selectedColumn = function(predicate) {
+		if ($scope.predicate === predicate) {
+			return $scope.reverse ? 'dsc' : 'asc';
 		}
-
-		$scope.groupItems();
-	}
-	
-	
+	}	
 	
 }) // PolicyListCtrl
 
