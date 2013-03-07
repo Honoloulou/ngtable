@@ -33,7 +33,7 @@ If it's displaying a subset of data with agent's first name is John, then any so
 
 *ng-class="selectedColumn('id')"*  
 When column *id* is being sorted, this method *selectedColumn* will return a string *'asc'* or *'dsc'* 
-when it's an ascending sort or descending sort.
+when it's an ascending sort or descending sort, it will also be the class that is added to element as well.
 
 _____________
 
