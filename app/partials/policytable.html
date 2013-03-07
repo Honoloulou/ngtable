@@ -57,13 +57,13 @@ Search Agent Name: <input ng-model="query.writingAgentName" ng-change="searchPol
 		</tr>
 	</tfoot>
 
-	<tbody list-limit="5" convert-date="receivedDate,policyEffectiveDate">
+	<tbody list-limit="5">
 
 	<tr ng-repeat="policy in groupedItems[currentPage]" ng-class-odd="'odd'" ng-class-even="'even'">
 		<td>{{policy.id}}</td>
 		<td>{{policy.writingAgentName}}</td>
 		<td>{{policy.writingAgentNumber}}</td>
-		<td>{{policy.receivedDate }}</td>
+		<td>{{policy.receivedDate | date:'dd MMM yyyy'}}</td>
 		<td>{{policy.policyEffectiveDate | date:'dd MMM yyyy'}}</td>
 		<td>{{policy.insuredAnnuitantName}}</td>
 		<td>{{policy.policyNumber}}</td>

@@ -16,15 +16,5 @@ angular.module('policy.directives',[]).
 		return {
 			templateUrl: "partials/pagination.html"
 		}
-	}).
-	// directive to convert string to date obj for easier
-	directive("convertDate", function(){
-		return {
-			link: function(scope, element, attrs) {
-				
-				scope.convertDate(attrs.convertDate);
-				
-			}
-		}
 	})
 

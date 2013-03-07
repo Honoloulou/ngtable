@@ -6,6 +6,8 @@ app.controller('PolicyListCtrl', function($scope, $http ,$filter) {
 	
 	var request = $http.get('policies/policies.json').success(function(data){
 		$scope.policies = data;
+		// convert properties to Date objects
+		$scope.convertDate("receivedDate,policyEffectiveDate");
 		$scope.groupItems();
 	});
 	$scope.reverse=false;
@@ -70,14 +72,11 @@ app.controller('PolicyListCtrl', function($scope, $http ,$filter) {
 	$scope.sortBy = function(predicate){
 		var tempArr = [];
 		// join arrays without returning an array
-		for (var i=0, l=$scope.pages; i<l; i++) {
-			tempArr.push.apply(tempArr, $scope.groupedItems[i]);
-		}
+		
 		// negate reverse if it's a same predicate, otherwise set to false
 		$scope.reverse = $scope.predicate == predicate ? !$scope.reverse : false;
-
 		$scope.predicate = predicate;
-		$scope.groupItems( $filter('orderBy')(tempArr, $scope.predicate, $scope.reverse) );
+		$scope.groupItems( $filter('orderBy')($scope.policies, $scope.predicate, $scope.reverse) );
 	}
 
 	$scope.convertDate = function(predicates) {
@@ -85,11 +84,9 @@ app.controller('PolicyListCtrl', function($scope, $http ,$filter) {
 
 		var m = 0,
 				n = predicates.length;
-		console.log(predicates);
 		for (var i=0, j=$scope.policies.length; i<j; i++) {
 			for (m=0; m<n; m++) {
 				$scope.policies[i][predicates[m]] = new Date( $scope.policies[i][predicates[m]] )
-				console.log(i + ' ' + $scope.policies[i][predicates[m]])
 			}
 		}
 
