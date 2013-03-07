@@ -22,6 +22,10 @@ app.controller('PolicyListCtrl', function($scope, $http ,$filter) {
 		'policyEffectiveDate' : 1
 	}
 
+	$scope.currencyProps = {
+		'accumulationAnnuitizationValue' : 1
+	}
+
 
 	$scope.setPage = function(page) {
 		$scope.currentPage = page
@@ -71,7 +75,21 @@ app.controller('PolicyListCtrl', function($scope, $http ,$filter) {
 		$scope.predicate ='';
 		$scope.reverse = false;
 		$scope.groupItems( filteredItems )
-		
+	}
+
+	// a sort helper to convert predicate to the correct type
+  function predicateConverter(item){
+		// if it's a date , convert it to a Date object
+		if ($scope.dateProps.hasOwnProperty($scope.predicate)) {
+			return new Date( item[$scope.predicate] )
+		} 
+
+		// it's a currency, strip the $ and comma, convert it to float
+		if ($scope.currencyProps.hasOwnProperty($scope.predicate)) {
+			return parseFloat( item[$scope.predicate].replace(/[\$,]/g,'') )
+		}
+
+		return item[$scope.predicate];
 	}
 
 	$scope.sortBy = function(predicate){	
@@ -81,14 +99,8 @@ app.controller('PolicyListCtrl', function($scope, $http ,$filter) {
 		// convert the date prop string to Date object on the fly, so it can compare 2 dates correctly
 		// leave original string intact so it's searchable
 		$scope.groupItems( 
-			$filter('orderBy')
-				( $scope.policies, 
-					function(item){
-						return $scope.dateProps.hasOwnProperty(predicate) ? new Date( item[predicate] ) : item[predicate];
-					}, 
-					$scope.reverse
-				) 
-		)		
+			$filter('orderBy')( $scope.policies, predicateConverter, $scope.reverse ) 
+		);		
 	}
 
 

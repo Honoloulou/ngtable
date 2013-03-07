@@ -653,13 +653,34 @@ function randomDateArr(){
  	return [first,last];
 }
 
+function currency(input) {
+            input = '' + input; // cast as a string, so it can use split()
+            var n;
+            if (!isNaN(input)) {
+                n = input.split('.');
+                n[0] = (parseInt(n[0])).toLocaleString();
+
+                // add $ sign
+                (n[0].indexOf('-') === 0) ?
+                    // negative number : add $ after the minus
+                    n[0] = n[0].replace('-','-$') : 
+                    n[0] = '$' + n[0];
+
+                // add .00 if it's an integer
+                (n[1] != undefined) ? 
+                    input = n[0] + '.' +  n[1] :
+                    input = n[0] + '.00';
+            }
+
+            return input;
+}
 
 d.forEach(function(el, index){ 
 	var dts = randomDateArr();
 	d[index]['id'] = index+1;
 	d[index]['writingAgentNumber'] = getRandomInt(1000000,9000000);
 	d[index]['policyNumber'] = getRandomInt(1000000,9000000);
-	d[index]['accumulationAnnuitizationValue'] = parseFloat(getRandomInt(100000,9000000) + '.' + getRandomInt(0,99));
+	d[index]['accumulationAnnuitizationValue'] = currency(parseFloat(getRandomInt(100000,9000000) + '.' + getRandomInt(0,99)).toFixed(2));
 	d[index]['receivedDate'] = dts[0];
 	d[index]['policyEffectiveDate'] = dts[1];
 	
