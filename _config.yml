@@ -1,0 +1,4 @@
+auto: false
+url: 
+permalink: /:categories/:title
+destination: app
